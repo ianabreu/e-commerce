@@ -1,6 +1,6 @@
 import { Product } from "@prisma/client";
 
-interface ProductWithTotalPrice extends Product {
+export interface ProductWithTotalPrice extends Product {
   totalPrice: number;
 }
 export const computeProductTotalPrice = (
@@ -13,7 +13,7 @@ export const computeProductTotalPrice = (
     };
   }
   const totalPrice =
-    Number(product.base_price) * (product.discount_percentage / 100);
+    Number(product.base_price) * ((100 - product.discount_percentage) / 100);
 
   return {
     ...product,
