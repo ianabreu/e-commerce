@@ -62,6 +62,10 @@ export default async function Home() {
           alt="Até 20% de desconto em fones!"
         />
       </div>
+      <div>
+        <SectionTitle>Fones</SectionTitle>
+        <ProductList products={headphones} />
+      </div>
     </div>
   );
 }
