@@ -94,7 +94,18 @@ const Header = () => {
       </Sheet>
 
       <h1 className="text-lg font-semibold">
-        <span className="text-primary">TECH</span> Store
+        <span
+          className="
+        bg-gradient-to-r 
+        from-[#5033C3] 
+        to-[#8162FF] 
+        bg-clip-text 
+        font-extrabold 
+        text-transparent"
+        >
+          Tech
+        </span>{" "}
+        Store
       </h1>
 
       <Button size="icon" variant="outline">
