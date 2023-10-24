@@ -14,7 +14,7 @@ const CategoryItem = ({ category: { image_url, name } }: CategoryItemProps) => {
           width={0}
           height={0}
           sizes="100vw"
-          className="z-10 h-auto max-h-[70%] w-auto max-w-[80%]"
+          className="h-auto max-h-[70%] w-3/4 max-w-[80%]"
           style={{
             objectFit: "contain",
           }}
