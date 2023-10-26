@@ -10,15 +10,15 @@ const ProductItem = ({
   product: { name, image_urls, totalPrice, discount_percentage, base_price },
 }: ProductItemProps) => {
   return (
-    <div className="flex max-w-[170px] flex-col gap-4">
-      <div className="relative flex h-[170px] w-[170px] items-center justify-center rounded-lg bg-accent">
+    <div className="flex h-full min-w-[170px] flex-1 flex-grow-0 flex-col gap-4">
+      <div className="relative flex aspect-square items-center justify-center rounded-lg bg-accent">
         <Image
           src={image_urls[0]}
           alt={name}
           height={0}
           width={0}
           sizes="100vw"
-          className="h-auto max-h-[70%] w-auto max-w-[80%]"
+          className="h-auto max-h-[70%] w-auto max-w-[70%]"
           style={{
             objectFit: "contain",
           }}
