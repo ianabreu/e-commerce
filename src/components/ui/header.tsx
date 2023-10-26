@@ -10,11 +10,19 @@ import {
 } from "lucide-react";
 import { Button } from "./button";
 import { Card } from "./card";
-import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "./sheet";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetHeader,
+  SheetTrigger,
+} from "./sheet";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { Avatar } from "./avatar";
 import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { Separator } from "./separator";
+import Link from "next/link";
+import SidebarLink from "./sidebar-link";
 
 const Header = () => {
   const { status, data } = useSession();
@@ -55,40 +63,25 @@ const Header = () => {
           )}
           <div className="mt-4 flex flex-col gap-3">
             {status === "unauthenticated" && (
-              <Button
-                onClick={handleLoginClick}
-                variant="outline"
-                className="w-full justify-start gap-2"
-              >
-                <LogInIcon size={16} />
+              <SidebarLink onClick={handleLoginClick} icon="login">
                 Fazer Login
-              </Button>
+              </SidebarLink>
             )}
             {status === "authenticated" && (
-              <Button
-                onClick={handleLogoutClick}
-                variant="outline"
-                className="w-full justify-start gap-2"
-              >
-                <LogOutIcon size={16} />
+              <SidebarLink onClick={handleLogoutClick} icon="logout">
                 Fazer Logout
-              </Button>
+              </SidebarLink>
             )}
 
-            <Button variant="outline" className="w-full justify-start gap-2">
-              <HomeIcon size={16} />
+            <SidebarLink href="/" icon="home">
               Início
-            </Button>
-
-            <Button variant="outline" className="w-full justify-start gap-2">
-              <PercentIcon size={16} />
+            </SidebarLink>
+            <SidebarLink href="/deals" icon="deals">
               Ofertas
-            </Button>
-
-            <Button variant="outline" className="w-full justify-start gap-2">
-              <ListOrderedIcon size={16} />
+            </SidebarLink>
+            <SidebarLink href="/catalog" icon="catalog">
               Catálogo
-            </Button>
+            </SidebarLink>
           </div>
         </SheetContent>
       </Sheet>
