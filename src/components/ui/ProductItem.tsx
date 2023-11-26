@@ -54,7 +54,7 @@ const ProductItem = ({
                   })}
                 </p>
                 <p className="text-xs line-through opacity-75">
-                  {Number(base_price).toLocaleString("pt-br", {
+                  {base_price.toLocaleString("pt-br", {
                     style: "currency",
                     currency: "BRL",
                   })}
@@ -62,7 +62,7 @@ const ProductItem = ({
               </>
             ) : (
               <p className="text-sm font-semibold">
-                {Number(base_price).toLocaleString("pt-br", {
+                {base_price.toLocaleString("pt-br", {
                   style: "currency",
                   currency: "BRL",
                 })}
