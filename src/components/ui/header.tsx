@@ -23,6 +23,8 @@ import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { Separator } from "./separator";
 import Link from "next/link";
 import SidebarLink from "./sidebar-link";
+import Sidebar from "./sidebar";
+import Cart from "./cart";
 
 const Header = () => {
   const { status, data } = useSession();
@@ -34,57 +36,47 @@ const Header = () => {
   };
   return (
     <Card className="flex items-center justify-between p-[1.875rem]">
-      <Sheet>
-        <SheetTrigger asChild>
-          <Button size="icon" variant="outline">
-            <MenuIcon />
-          </Button>
-        </SheetTrigger>
-        <SheetContent side="left">
-          <SheetHeader className="text-left text-lg font-semibold">
-            Menu
-          </SheetHeader>
-          {status === "authenticated" && data?.user && (
-            <div className="flex flex-col">
-              <div className="flex items-center gap-2 py-4">
-                <Avatar>
-                  <AvatarFallback>
-                    {data?.user?.name?.[0].toUpperCase()}
-                  </AvatarFallback>
-                  {data.user.image && <AvatarImage src={data.user.image} />}
-                </Avatar>
-                <div className="flex flex-col">
-                  <p className="font-medium">{data.user.name}</p>
-                  <p className="text-sm opacity-75">Boas Compras!</p>
-                </div>
+      <Sidebar header="Menu">
+        {status === "authenticated" && data?.user && (
+          <div className="flex flex-col">
+            <div className="flex items-center gap-2 py-4">
+              <Avatar>
+                <AvatarFallback>
+                  {data?.user?.name?.[0].toUpperCase()}
+                </AvatarFallback>
+                {data.user.image && <AvatarImage src={data.user.image} />}
+              </Avatar>
+              <div className="flex flex-col">
+                <p className="font-medium">{data.user.name}</p>
+                <p className="text-sm opacity-75">Boas Compras!</p>
               </div>
-              <Separator />
             </div>
-          )}
-          <div className="mt-4 flex flex-col gap-3">
-            {status === "unauthenticated" && (
-              <SidebarLink onClick={handleLoginClick} icon="login">
-                Fazer Login
-              </SidebarLink>
-            )}
-            {status === "authenticated" && (
-              <SidebarLink onClick={handleLogoutClick} icon="logout">
-                Fazer Logout
-              </SidebarLink>
-            )}
-
-            <SidebarLink href="/" icon="home">
-              Início
-            </SidebarLink>
-            <SidebarLink href="/deals" icon="deals">
-              Ofertas
-            </SidebarLink>
-            <SidebarLink href="/catalog" icon="catalog">
-              Catálogo
-            </SidebarLink>
+            <Separator />
           </div>
-        </SheetContent>
-      </Sheet>
+        )}
+        <div className="mt-4 flex flex-col gap-3">
+          {status === "unauthenticated" && (
+            <SidebarLink onClick={handleLoginClick} icon="login">
+              Fazer Login
+            </SidebarLink>
+          )}
+          {status === "authenticated" && (
+            <SidebarLink onClick={handleLogoutClick} icon="logout">
+              Fazer Logout
+            </SidebarLink>
+          )}
+
+          <SidebarLink href="/" icon="home">
+            Início
+          </SidebarLink>
+          <SidebarLink href="/deals" icon="deals">
+            Ofertas
+          </SidebarLink>
+          <SidebarLink href="/catalog" icon="catalog">
+            Catálogo
+          </SidebarLink>
+        </div>
+      </Sidebar>
 
       <Link href={"/"}>
         <h1 className="text-lg font-semibold">
@@ -103,9 +95,9 @@ const Header = () => {
         </h1>
       </Link>
 
-      <Button size="icon" variant="outline">
-        <ShoppingCartIcon />
-      </Button>
+      <Sidebar header="Carrinho" icon="cart" side="right">
+        <Cart />
+      </Sidebar>
     </Card>
   );
 };
