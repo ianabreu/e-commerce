@@ -1,22 +1,7 @@
 "use client";
-import {
-  MenuIcon,
-  ShoppingCartIcon,
-  LogInIcon,
-  PercentIcon,
-  ListOrderedIcon,
-  HomeIcon,
-  LogOutIcon,
-} from "lucide-react";
-import { Button } from "./button";
+import { ShoppingCartIcon } from "lucide-react";
 import { Card } from "./card";
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetHeader,
-  SheetTrigger,
-} from "./sheet";
+
 import { signIn, signOut, useSession } from "next-auth/react";
 import { Avatar } from "./avatar";
 import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
@@ -25,6 +10,7 @@ import Link from "next/link";
 import SidebarLink from "./sidebar-link";
 import Sidebar from "./sidebar";
 import Cart from "./cart";
+import { Badge } from "./badge";
 
 const Header = () => {
   const { status, data } = useSession();
@@ -95,7 +81,18 @@ const Header = () => {
         </h1>
       </Link>
 
-      <Sidebar header="Carrinho" icon="cart" side="right">
+      <Sidebar
+        header={
+          <Badge
+            className="w-fit gap-1 border-2 border-primary px-3 py-[0.375rem] text-base uppercase"
+            variant={"outline"}
+          >
+            <ShoppingCartIcon /> Carrinho
+          </Badge>
+        }
+        icon="cart"
+        side="right"
+      >
         <Cart />
       </Sidebar>
     </Card>

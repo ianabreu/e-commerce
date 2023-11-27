@@ -1,21 +1,18 @@
 "use client";
 
+import { useState, useContext } from "react";
 import { Button } from "@/components/ui/button";
 import DiscountBadge from "@/components/ui/discount-badge";
 import { ProductWithTotalPrice } from "@/helpers/product";
+import { CartContext } from "@/providers/cart";
 import { ArrowLeftIcon, ArrowRightIcon, TruckIcon } from "lucide-react";
-import { useState } from "react";
 
 interface ProductInfoProps {
-  product: Pick<
-    ProductWithTotalPrice,
-    "base_price" | "discount_percentage" | "description" | "totalPrice" | "name"
-  >;
+  product: ProductWithTotalPrice;
 }
-const ProductInfo = ({
-  product: { base_price, description, discount_percentage, totalPrice, name },
-}: ProductInfoProps) => {
+const ProductInfo = ({ product }: ProductInfoProps) => {
   const [quantity, setQuantity] = useState(1);
+  const { addProductToCart } = useContext(CartContext);
 
   const handleDecreaseQuantityClick = () => {
     setQuantity((prev) => (prev === 1 ? prev : prev - 1));
@@ -23,25 +20,28 @@ const ProductInfo = ({
   const handleIncreaseQuantityClick = () => {
     setQuantity((prev) => prev + 1);
   };
+  const handleAddProductToCart = () => {
+    addProductToCart({ ...product, quantity });
+  };
 
   return (
     <div className="flex flex-col px-5">
-      <h2 className="text-lg">{name}</h2>
+      <h2 className="text-lg">{product.name}</h2>
       <div className="flex items-center gap-2">
         <h1 className="text-lg font-bold">
-          {totalPrice.toLocaleString("pt-br", {
+          {product.totalPrice.toLocaleString("pt-br", {
             style: "currency",
             currency: "BRL",
           })}
         </h1>
-        {discount_percentage > 0 && (
-          <DiscountBadge>{discount_percentage}</DiscountBadge>
+        {product.discount_percentage > 0 && (
+          <DiscountBadge>{product.discount_percentage}</DiscountBadge>
         )}
       </div>
-      {discount_percentage > 0 && (
+      {product.discount_percentage > 0 && (
         <p className="text-sm line-through opacity-75">
           De:{" "}
-          {Number(base_price).toLocaleString("pt-br", {
+          {Number(product.base_price).toLocaleString("pt-br", {
             style: "currency",
             currency: "BRL",
           })}
@@ -66,9 +66,12 @@ const ProductInfo = ({
       </div>
       <div className="mt-8 flex flex-col gap-3">
         <h3 className="font-bold">Descrição:</h3>
-        <p className="text-justify text-sm opacity-60">{description}</p>
+        <p className="text-justify text-sm opacity-60">{product.description}</p>
       </div>
-      <Button className="mt-8 font-bold uppercase">
+      <Button
+        className="mt-8 font-bold uppercase"
+        onClick={handleAddProductToCart}
+      >
         Adicionar ao Carrinho
       </Button>
       <div className="mt-5 flex items-center justify-between rounded-lg bg-accent px-5 py-2">

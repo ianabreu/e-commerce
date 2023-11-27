@@ -7,7 +7,7 @@ interface SidebarProps {
   children?: ReactNode;
   side?: "left" | "right" | "bottom" | "top";
   icon?: "menu" | "cart";
-  header?: string;
+  header?: ReactNode;
 }
 
 const MENU_ICON = {
