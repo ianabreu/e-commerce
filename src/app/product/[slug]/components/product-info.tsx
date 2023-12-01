@@ -6,6 +6,7 @@ import DiscountBadge from "@/components/ui/discount-badge";
 import { ProductWithTotalPrice } from "@/helpers/product";
 import { CartContext } from "@/providers/cart";
 import { ArrowLeftIcon, ArrowRightIcon, TruckIcon } from "lucide-react";
+import ProductQuantity from "@/components/ui/product-quantity";
 
 interface ProductInfoProps {
   product: ProductWithTotalPrice;
@@ -47,23 +48,11 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
           })}
         </p>
       )}
-      <div className="mt-4 flex items-center gap-2">
-        <Button
-          size="icon"
-          variant={"outline"}
-          onClick={handleDecreaseQuantityClick}
-        >
-          <ArrowLeftIcon size={16} />
-        </Button>
-        <span>{quantity}</span>
-        <Button
-          size="icon"
-          variant={"outline"}
-          onClick={handleIncreaseQuantityClick}
-        >
-          <ArrowRightIcon size={16} />
-        </Button>
-      </div>
+      <ProductQuantity
+        quantity={quantity}
+        decrease={handleDecreaseQuantityClick}
+        increase={handleIncreaseQuantityClick}
+      />
       <div className="mt-8 flex flex-col gap-3">
         <h3 className="font-bold">Descrição:</h3>
         <p className="text-justify text-sm opacity-60">{product.description}</p>
