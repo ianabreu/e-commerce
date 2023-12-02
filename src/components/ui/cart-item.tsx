@@ -9,7 +9,8 @@ interface CartItemProps {
   product: CartProduct;
 }
 const CartItem = ({ product }: CartItemProps) => {
-  const { decreaseProductQuantity } = useContext(CartContext);
+  const { decreaseProductQuantity, increaseProductQuantity } =
+    useContext(CartContext);
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-4">
@@ -44,7 +45,7 @@ const CartItem = ({ product }: CartItemProps) => {
           <ProductQuantity
             quantity={product.quantity}
             decrease={() => decreaseProductQuantity(product.id)}
-            increase={() => {}}
+            increase={() => increaseProductQuantity(product.id)}
             size="small"
           />
         </div>
