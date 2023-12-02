@@ -2,6 +2,7 @@ import { ProductWithTotalPrice } from "@/helpers/product";
 import Image from "next/image";
 import Link from "next/link";
 import DiscountBadge from "./discount-badge";
+import { formatPrice } from "@/helpers/formatPrice";
 
 interface ProductItemProps {
   product: ProductWithTotalPrice;
@@ -45,26 +46,13 @@ const ProductItem = ({
           <div className="flex items-center gap-2">
             {discount_percentage > 0 ? (
               <>
-                <p className=" font-semibold">
-                  {totalPrice.toLocaleString("pt-br", {
-                    style: "currency",
-                    currency: "BRL",
-                  })}
-                </p>
+                <p className=" font-semibold">{formatPrice(totalPrice)}</p>
                 <p className="text-xs line-through opacity-75">
-                  {base_price.toLocaleString("pt-br", {
-                    style: "currency",
-                    currency: "BRL",
-                  })}
+                  {formatPrice(base_price)}
                 </p>
               </>
             ) : (
-              <p className="text-sm font-semibold">
-                {base_price.toLocaleString("pt-br", {
-                  style: "currency",
-                  currency: "BRL",
-                })}
-              </p>
+              <p className="text-sm font-semibold">{formatPrice(base_price)}</p>
             )}
           </div>
         </div>

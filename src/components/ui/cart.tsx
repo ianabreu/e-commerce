@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { CartContext } from "@/providers/cart";
 import CartItem from "./cart-item";
 import { Separator } from "./separator";
+import { formatPrice } from "@/helpers/formatPrice";
 
 const Cart = () => {
   const { products, cartSubtotalPrice, cartTotalDiscount, cartTotalPrice } =
@@ -26,7 +27,7 @@ const Cart = () => {
         <Separator />
         <div className="flex items-center justify-between text-xs">
           <p>Subtotal</p>
-          <p>{cartSubtotalPrice}</p>
+          <p>{formatPrice(cartSubtotalPrice)}</p>
         </div>
         <Separator />
         <div className="flex items-center justify-between text-xs">
@@ -36,12 +37,12 @@ const Cart = () => {
         <Separator />
         <div className="flex items-center justify-between text-xs">
           <p>Descontos</p>
-          <p>- {cartTotalDiscount}</p>
+          <p>- {formatPrice(cartTotalDiscount)}</p>
         </div>
         <Separator />
         <div className="flex items-center justify-between text-sm font-bold">
           <p>Total</p>
-          <p>{cartTotalPrice}</p>
+          <p>{formatPrice(cartTotalPrice)}</p>
         </div>
       </div>
     </div>

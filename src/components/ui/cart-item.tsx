@@ -4,6 +4,7 @@ import { TrashIcon } from "lucide-react";
 import { Button } from "./button";
 import { CartContext, CartProduct } from "@/providers/cart";
 import ProductQuantity from "./product-quantity";
+import { formatPrice } from "@/helpers/formatPrice";
 
 interface CartItemProps {
   product: CartProduct;
@@ -31,17 +32,11 @@ const CartItem = ({ product }: CartItemProps) => {
           <p className="text-xs">{product.name}</p>
           <div className="flex items-center gap-2">
             <p className="text-sm font-bold">
-              {product.totalPrice.toLocaleString("pt-br", {
-                style: "currency",
-                currency: "BRL",
-              })}
+              {formatPrice(product.totalPrice)}
             </p>
             {product.discount_percentage > 0 && (
               <p className="text-xs line-through opacity-75">
-                {product.base_price.toLocaleString("pt-br", {
-                  style: "currency",
-                  currency: "BRL",
-                })}
+                {formatPrice(product.base_price)}
               </p>
             )}
           </div>

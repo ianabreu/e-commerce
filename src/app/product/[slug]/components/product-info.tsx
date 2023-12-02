@@ -7,6 +7,7 @@ import { ProductWithTotalPrice } from "@/helpers/product";
 import { CartContext } from "@/providers/cart";
 import { ArrowLeftIcon, ArrowRightIcon, TruckIcon } from "lucide-react";
 import ProductQuantity from "@/components/ui/product-quantity";
+import { formatPrice } from "@/helpers/formatPrice";
 
 interface ProductInfoProps {
   product: ProductWithTotalPrice;
@@ -29,23 +30,14 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
     <div className="flex flex-col px-5">
       <h2 className="text-lg">{product.name}</h2>
       <div className="flex items-center gap-2">
-        <h1 className="text-lg font-bold">
-          {product.totalPrice.toLocaleString("pt-br", {
-            style: "currency",
-            currency: "BRL",
-          })}
-        </h1>
+        <h1 className="text-lg font-bold">{formatPrice(product.totalPrice)}</h1>
         {product.discount_percentage > 0 && (
           <DiscountBadge>{product.discount_percentage}</DiscountBadge>
         )}
       </div>
       {product.discount_percentage > 0 && (
         <p className="text-sm line-through opacity-75">
-          De:{" "}
-          {Number(product.base_price).toLocaleString("pt-br", {
-            style: "currency",
-            currency: "BRL",
-          })}
+          De: {formatPrice(product.base_price)}
         </p>
       )}
       <ProductQuantity
