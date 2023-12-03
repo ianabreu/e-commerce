@@ -1,10 +1,10 @@
 import { useContext } from "react";
 import { CartContext } from "@/providers/cart";
 import CartItem from "./cart-item";
-import { Separator } from "./separator";
 import { formatPrice } from "@/helpers/formatPrice";
 import { ScrollArea } from "./scroll-area";
 import { Button } from "./button";
+import CartInfoValue from "./cart-info-value";
 
 const Cart = () => {
   const { products, cartSubtotalPrice, cartTotalDiscount, cartTotalPrice } =
@@ -29,26 +29,25 @@ const Cart = () => {
       </ScrollArea>
 
       <div className="flex flex-col gap-2">
-        <Separator />
-        <div className="flex items-center justify-between text-xs">
+        <CartInfoValue>
           <p>Subtotal</p>
           <p>{formatPrice(cartSubtotalPrice)}</p>
-        </div>
-        <Separator />
-        <div className="flex items-center justify-between text-xs">
+        </CartInfoValue>
+
+        <CartInfoValue>
           <p>Entrega</p>
           <p>GRÁTIS</p>
-        </div>
-        <Separator />
-        <div className="flex items-center justify-between text-xs">
+        </CartInfoValue>
+
+        <CartInfoValue>
           <p>Descontos</p>
           <p>- {formatPrice(cartTotalDiscount)}</p>
-        </div>
-        <Separator />
-        <div className="flex items-center justify-between text-sm font-bold">
+        </CartInfoValue>
+        <CartInfoValue>
           <p>Total</p>
           <p>{formatPrice(cartTotalPrice)}</p>
-        </div>
+        </CartInfoValue>
+
         <Button className="mt-7 font-bold uppercase">Finalizar Compra</Button>
       </div>
     </div>
