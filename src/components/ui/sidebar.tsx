@@ -28,7 +28,7 @@ const Sidebar = ({
           {MENU_ICON[icon]}
         </Button>
       </SheetTrigger>
-      <SheetContent side={side}>
+      <SheetContent side={side} className="flex h-full flex-col gap-8">
         {header && (
           <SheetHeader className="text-left text-lg font-semibold">
             {header}
