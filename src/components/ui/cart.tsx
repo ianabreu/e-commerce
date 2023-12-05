@@ -35,34 +35,35 @@ const Cart = () => {
           )}
         </div>
       </ScrollArea>
+      {products.length > 0 && (
+        <div className="flex flex-col gap-2">
+          <CartInfoValue>
+            <p>Subtotal</p>
+            <p>{formatPrice(cartSubtotalPrice)}</p>
+          </CartInfoValue>
 
-      <div className="flex flex-col gap-2">
-        <CartInfoValue>
-          <p>Subtotal</p>
-          <p>{formatPrice(cartSubtotalPrice)}</p>
-        </CartInfoValue>
+          <CartInfoValue>
+            <p>Entrega</p>
+            <p>GRÁTIS</p>
+          </CartInfoValue>
 
-        <CartInfoValue>
-          <p>Entrega</p>
-          <p>GRÁTIS</p>
-        </CartInfoValue>
+          <CartInfoValue>
+            <p>Descontos</p>
+            <p>- {formatPrice(cartTotalDiscount)}</p>
+          </CartInfoValue>
+          <CartInfoValue>
+            <p>Total</p>
+            <p>{formatPrice(cartTotalPrice)}</p>
+          </CartInfoValue>
 
-        <CartInfoValue>
-          <p>Descontos</p>
-          <p>- {formatPrice(cartTotalDiscount)}</p>
-        </CartInfoValue>
-        <CartInfoValue>
-          <p>Total</p>
-          <p>{formatPrice(cartTotalPrice)}</p>
-        </CartInfoValue>
-
-        <Button
-          className="mt-7 font-bold uppercase"
-          onClick={handleFinishPurchaseClick}
-        >
-          Finalizar Compra
-        </Button>
-      </div>
+          <Button
+            className="mt-7 font-bold uppercase"
+            onClick={handleFinishPurchaseClick}
+          >
+            Finalizar Compra
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
