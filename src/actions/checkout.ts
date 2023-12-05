@@ -2,7 +2,6 @@
 import Stripe from "stripe";
 
 import { CartProduct } from "@/providers/cart";
-const baseURL = "https://tech-store-e-commerce.vercel.app/";
 
 export const createCheckout = async (products: CartProduct[]) => {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
@@ -11,8 +10,8 @@ export const createCheckout = async (products: CartProduct[]) => {
   const checkout = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     mode: "payment",
-    success_url: baseURL,
-    cancel_url: baseURL,
+    success_url: process.env.HOST_URL,
+    cancel_url: process.env.HOST_URL,
     line_items: products.map((product) => {
       return {
         price_data: {
