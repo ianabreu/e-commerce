@@ -60,9 +60,9 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
           <TruckIcon />
           <div className="flex flex-col">
             <p className="text-xs">
-              Entrega via <span className="font-bold">FSPacket®️</span>
+              Entrega via <span className="font-bold">Correios</span>
             </p>
-            <p className="text-xs text-[#8162ff]">
+            <p className="text-xs text-primary">
               Envio para <span className="font-bold">todo Brasil</span>
             </p>
           </div>

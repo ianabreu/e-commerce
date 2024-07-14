@@ -25,14 +25,14 @@ const CategoryProducts = async ({
     return null;
   }
   return (
-    <div className="flex  flex-col gap-8 p-5">
+    <div className="container flex max-w-3xl flex-col gap-8 p-5">
       <Badge
         className="w-fit gap-1 border-2 border-primary px-3 py-[0.375rem] text-base uppercase"
         variant={"outline"}
       >
         {CATEGORY_ICON[slug as keyof typeof CATEGORY_ICON]} {category.name}
       </Badge>
-      <div className="grid grid-cols-5 justify-center gap-8 max-lg:grid-cols-4 max-md:grid-cols-3 max-sm:grid-cols-2">
+      <div className="grid grid-cols-2 justify-center gap-8 md:grid-cols-3  ">
         {category.products.map((product) => (
           <ProductItem
             key={product.id}

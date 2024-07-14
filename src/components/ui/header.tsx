@@ -11,6 +11,7 @@ import SidebarLink from "./sidebar-link";
 import Sidebar from "./sidebar";
 import Cart from "./cart";
 import { Badge } from "./badge";
+import Logo from "./logo";
 
 const Header = () => {
   const { status, data } = useSession();
@@ -21,7 +22,7 @@ const Header = () => {
     await signOut();
   };
   return (
-    <Card className="flex items-center justify-between p-[1.875rem]">
+    <Card className="flex items-center justify-between bg-foreground p-[1.875rem]">
       <Sidebar header="Menu">
         {status === "authenticated" && data?.user && (
           <div className="flex flex-col">
@@ -65,8 +66,11 @@ const Header = () => {
       </Sidebar>
 
       <Link href={"/"}>
-        <h1 className="text-lg font-semibold">
-          <span
+        <Logo variant="light" />
+        {/* <Image src={Logo} alt="Logo" width={180} /> */}
+
+        {/* <h1 className="text-lg font-semibold">
+         <span
             className="
           bg-gradient-to-r 
           from-[#5033C3] 
@@ -75,10 +79,10 @@ const Header = () => {
           font-extrabold
           text-transparent"
           >
-            Tech
-          </span>{" "}
-          Store
-        </h1>
+            Z
+          </span>
+          Shop
+        </h1> */}
       </Link>
 
       <Sidebar

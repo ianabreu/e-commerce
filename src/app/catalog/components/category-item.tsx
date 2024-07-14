@@ -11,7 +11,11 @@ const CategoryItem = ({
   return (
     <Link href={`/category/${slug}`}>
       <div className="flex flex-col">
-        <div className="flex h-[150px] w-full items-center justify-center rounded-tl-lg rounded-tr-lg bg-category-item-gradient">
+        <div
+          className="flex h-[120px] w-full items-center justify-center rounded-tl-lg rounded-tr-lg bg-gradient-to-r 
+          from-primary 
+          to-[#00d65d]"
+        >
           <Image
             src={image_url}
             alt={name}
@@ -24,8 +28,10 @@ const CategoryItem = ({
             }}
           />
         </div>
-        <div className="rounded-bl-lg rounded-br-lg  bg-accent py-3">
-          <p className="text-center text-sm font-semibold">{name}</p>
+        <div className="rounded-bl-lg rounded-br-lg bg-popover-foreground py-3">
+          <p className="text-center text-sm font-semibold text-background">
+            {name}
+          </p>
         </div>
       </div>
     </Link>
