@@ -23,6 +23,7 @@ export const POST = async (request: Request) => {
       {
         expand: ["line_items"],
       },
+      { apiVersion: "2023-10-16" },
     );
     const line_items = sessionWithLineItems.line_items;
     console.log(line_items);
