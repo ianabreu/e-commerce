@@ -1,17 +1,17 @@
 import {
   HeadphonesIcon,
   KeyboardIcon,
-  MonitorIcon,
   MouseIcon,
-  SpeakerIcon,
-  SquareIcon,
+  PrinterIcon,
+  SmartphoneIcon,
+  TvIcon,
 } from "lucide-react";
 
 export const CATEGORY_ICON = {
-  keyboards: <KeyboardIcon size={16} />,
-  monitors: <MonitorIcon size={16} />,
-  headphones: <HeadphonesIcon size={16} />,
-  mousepads: <SquareIcon size={16} />,
-  speakers: <SpeakerIcon size={16} />,
+  teclados: <KeyboardIcon size={16} />,
+  smartphones: <SmartphoneIcon size={16} />,
+  fones: <HeadphonesIcon size={16} />,
+  impressoras: <PrinterIcon size={16} />,
+  televisores: <TvIcon size={16} />,
   mouses: <MouseIcon size={16} />,
 };
