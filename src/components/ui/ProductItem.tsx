@@ -18,16 +18,16 @@ const ProductItem = ({
   },
 }: ProductItemProps) => {
   return (
-    <Link href={`/product/${slug}`}>
-      <div className="flex flex-1 flex-grow-0 flex-col gap-4 bg-background">
-        <div className="relative flex items-center justify-center rounded-lg ">
+    <Link className="m-auto" href={`/product/${slug}`}>
+      <div className="flex w-44 flex-1 flex-grow-0 flex-col items-center gap-4 md:w-60">
+        <div className="relative flex h-44 w-fit items-center justify-center rounded-lg md:h-60">
           <Image
             src={image_urls[0]}
             alt={name}
             height={0}
             width={0}
             sizes="100vw"
-            className="min-w-60 h-60 w-full"
+            className="h-full w-full"
             style={{
               objectFit: "contain",
             }}
@@ -39,8 +39,8 @@ const ProductItem = ({
           )}
         </div>
 
-        <div className="flex w-60 flex-col gap-1 ">
-          <p className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-xs">
+        <div className="flex w-full flex-col gap-1 ">
+          <p className="overflow-hidden text-ellipsis whitespace-nowrap text-xs">
             {name}
           </p>
           <div className="flex items-center gap-2">

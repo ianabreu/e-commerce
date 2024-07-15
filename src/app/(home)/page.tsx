@@ -2,7 +2,21 @@ import Categories from "./components/categories";
 import { prismaClient } from "@/lib/prisma";
 import ProductList from "../../components/ui/product-list";
 import SectionTitle from "../../components/ui/section-title";
-import PromoBanner from "./components/promo-banner";
+import Slider from "./components/slider";
+const slides = [
+  {
+    source: "/banner-home-01.png",
+    title: "Até 55% de desconto esse mês!",
+  },
+  {
+    source: "/banner-home-02.png",
+    title: "Até 55% de desconto em mouses!",
+  },
+  {
+    source: "/banner-home-03.png",
+    title: "Até 20% de desconto em fones!",
+  },
+];
 
 export default async function Home() {
   const deals = await prismaClient.product.findMany({
@@ -12,28 +26,25 @@ export default async function Home() {
       },
     },
   });
-  const keyboards = await prismaClient.product.findMany({
+  const smartphones = await prismaClient.product.findMany({
     where: {
       category: {
-        slug: "keyboards",
+        slug: "smartphones",
       },
     },
   });
-  const mouses = await prismaClient.product.findMany({
+  const televisores = await prismaClient.product.findMany({
     where: {
       category: {
-        slug: "mouses",
+        slug: "televisores",
       },
     },
   });
 
   return (
-    <div className="flex flex-col gap-8 py-8">
-      <div className="px-5">
-        <PromoBanner
-          src={"/banner-home-01.png"}
-          alt={"Até 55% de desconto esse mês!"}
-        />
+    <div className="container flex flex-col gap-8 px-0">
+      <div className="">
+        <Slider slides={slides} />
       </div>
       <div className="px-5">
         <Categories />
@@ -44,27 +55,13 @@ export default async function Home() {
         <ProductList products={deals} />
       </div>
 
-      <div className="px-5">
-        <PromoBanner
-          src={"/banner-home-02.png"}
-          alt="Até 55% de desconto em mouses!"
-        />
-      </div>
-
       <div>
-        <SectionTitle>Teclados</SectionTitle>
-        <ProductList products={keyboards} />
-      </div>
-
-      <div className="px-5">
-        <PromoBanner
-          src={"/banner-home-03.png"}
-          alt="Até 20% de desconto em fones!"
-        />
+        <SectionTitle>Smartphones</SectionTitle>
+        <ProductList products={smartphones} />
       </div>
       <div>
-        <SectionTitle>Mouses</SectionTitle>
-        <ProductList products={mouses} />
+        <SectionTitle>Televisores</SectionTitle>
+        <ProductList products={televisores} />
       </div>
     </div>
   );
