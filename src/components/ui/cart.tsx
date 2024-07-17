@@ -10,6 +10,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { createOrder } from "@/actions/order";
 import { useSession } from "next-auth/react";
 import { signIn } from "next-auth/react";
+import Stripe from "stripe";
 
 const Cart = () => {
   const { data } = useSession();
@@ -21,10 +22,17 @@ const Cart = () => {
       await signIn();
       return;
     }
-    await createOrder(products, data?.user.id);
-    const checkout = await createCheckout(products);
+    // const order = await createOrder(JSON.stringify(products), data?.user.id);
+
+    const checkout = await createCheckout(
+      JSON.stringify(products),
+      "order.id teste",
+    );
+    const { id: checkoutId } = JSON.parse(
+      checkout,
+    ) as Stripe.Response<Stripe.Checkout.Session>;
     const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
-    stripe?.redirectToCheckout({ sessionId: checkout.id });
+    stripe?.redirectToCheckout({ sessionId: checkoutId });
   };
   return (
     <div className="flex h-full max-h-full flex-col gap-4 overflow-hidden">

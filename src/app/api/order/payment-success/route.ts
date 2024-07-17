@@ -18,6 +18,7 @@ export const POST = async (request: Request) => {
     process.env.STRIPE_WEBHOOK_SECRET_KEY,
   );
   if (event.type === "checkout.session.completed") {
+    const session = event.data.object as any;
     const sessionWithLineItems = await stripe.checkout.sessions.retrieve(
       event.data.object.id,
       {
@@ -25,9 +26,10 @@ export const POST = async (request: Request) => {
       },
       { apiVersion: "2023-10-16" },
     );
-    const line_items = sessionWithLineItems.line_items;
-    console.log(line_items);
+    console.log(sessionWithLineItems.metadata);
     //Criar Order
+  } else {
+    console.log(event.type);
   }
 
   return NextResponse.json({ received: true });
