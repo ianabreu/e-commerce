@@ -7,12 +7,21 @@ import { Button } from "./button";
 import CartInfoValue from "./cart-info-value";
 import { createCheckout } from "@/actions/checkout";
 import { loadStripe } from "@stripe/stripe-js";
+import { createOrder } from "@/actions/order";
+import { useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 
 const Cart = () => {
+  const { data } = useSession();
   const { products, cartSubtotalPrice, cartTotalDiscount, cartTotalPrice } =
     useContext(CartContext);
 
   const handleFinishPurchaseClick = async () => {
+    if (!data?.user) {
+      await signIn();
+      return;
+    }
+    await createOrder(products, data?.user.id);
     const checkout = await createCheckout(products);
     const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
     stripe?.redirectToCheckout({ sessionId: checkout.id });
