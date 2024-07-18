@@ -10,7 +10,7 @@ export const createCheckout = async (productsJSON: string, orderId: string) => {
   });
   const products: CartProduct[] = JSON.parse(productsJSON);
   const checkout = await stripe.checkout.sessions.create({
-    payment_method_types: ["card", "boleto"],
+    payment_method_types: ["card"],
     mode: "payment",
     success_url: process.env.HOST_URL,
     cancel_url: process.env.HOST_URL,

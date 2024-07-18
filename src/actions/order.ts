@@ -13,7 +13,7 @@ export const createOrder = async (products: string, userId: string) => {
           data: itens.map((product) => ({
             product_id: product.id,
             base_price: product.base_price,
-            discount_percentage: product.base_price,
+            discount_percentage: product.discount_percentage,
             quantity: product.quantity,
           })),
         },

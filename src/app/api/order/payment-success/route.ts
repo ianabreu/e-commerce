@@ -1,3 +1,4 @@
+import { prismaClient } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 
@@ -18,7 +19,6 @@ export const POST = async (request: Request) => {
     process.env.STRIPE_WEBHOOK_SECRET_KEY,
   );
   if (event.type === "checkout.session.completed") {
-    const session = event.data.object as any;
     const sessionWithLineItems = await stripe.checkout.sessions.retrieve(
       event.data.object.id,
       {
@@ -26,10 +26,18 @@ export const POST = async (request: Request) => {
       },
       { apiVersion: "2023-10-16" },
     );
-    console.log(sessionWithLineItems.metadata);
-    //Criar Order
+    const orderId = sessionWithLineItems.metadata?.orderId as string;
+
+    await prismaClient.order.update({
+      where: {
+        id: orderId,
+      },
+      data: {
+        status: "PAYMENT_CONFIRMED",
+      },
+    });
   } else {
-    console.log(event.type);
+    console.log("EventType: ", event.type);
   }
 
   return NextResponse.json({ received: true });

@@ -22,12 +22,9 @@ const Cart = () => {
       await signIn();
       return;
     }
-    // const order = await createOrder(JSON.stringify(products), data?.user.id);
+    const order = await createOrder(JSON.stringify(products), data?.user.id);
 
-    const checkout = await createCheckout(
-      JSON.stringify(products),
-      "order.id teste",
-    );
+    const checkout = await createCheckout(JSON.stringify(products), order.id);
     const { id: checkoutId } = JSON.parse(
       checkout,
     ) as Stripe.Response<Stripe.Checkout.Session>;
