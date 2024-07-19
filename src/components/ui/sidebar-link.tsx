@@ -4,6 +4,7 @@ import {
   ListOrderedIcon,
   LogInIcon,
   LogOutIcon,
+  Package,
   PercentIcon,
 } from "lucide-react";
 import { Button } from "./button";
@@ -22,6 +23,7 @@ export const SIDEBAR_ICON = {
   home: <HomeIcon size={16} />,
   deals: <PercentIcon size={16} />,
   catalog: <ListOrderedIcon size={16} />,
+  order: <Package size={16} />,
 };
 const SidebarLink = ({
   children,

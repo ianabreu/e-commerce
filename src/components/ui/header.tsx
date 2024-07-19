@@ -57,6 +57,9 @@ const Header = () => {
             <SidebarLink href="/" icon="home">
               Início
             </SidebarLink>
+            <SidebarLink href="/orders" icon="order">
+              Meus Pedidos
+            </SidebarLink>
             <SidebarLink href="/deals" icon="deals">
               Ofertas
             </SidebarLink>
