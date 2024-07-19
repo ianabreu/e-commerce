@@ -24,7 +24,7 @@ export const createCheckout = async (productsJSON: string, orderId: string) => {
             description: product.description,
             images: product.image_urls,
           },
-          unit_amount: product.totalPrice * 100,
+          unit_amount: Math.ceil(product.totalPrice * 100),
         },
         quantity: product.quantity,
       };
