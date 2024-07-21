@@ -35,7 +35,7 @@ export const POST = async (request: Request) => {
         console.log("Evento Desconhecido: ", event.type);
     }
 
-    return Response.json({}, { status: 200 });
+    return Response.json({ received: true }, { status: 200 });
   } catch (error) {
     return Response.json(error, { status: 400 });
   }

@@ -5,16 +5,18 @@ import Header from "@/components/ui/header";
 import { AuthProvider } from "@/providers/auth";
 import Footer from "@/components/ui/footer";
 import { CartProvider } from "@/providers/cart";
+import storeInfo from "../../public/data/store.json";
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700", "800"],
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Tech Store",
-  description: "A melhor loja em tecnologia",
-};
+export async function generateMetadata() {
+  return {
+    title: storeInfo.name,
+  };
+}
 
 export default function RootLayout({
   children,
@@ -24,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body className={poppins.className}>
-        <div className="flex h-full flex-col">
+        <div className="flex h-full flex-col overflow-x-hidden">
           <AuthProvider>
             <CartProvider>
               <Header />

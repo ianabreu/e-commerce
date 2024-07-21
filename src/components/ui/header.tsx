@@ -1,20 +1,44 @@
 "use client";
-import { ShoppingCartIcon } from "lucide-react";
-import { Card } from "./card";
-
+import {
+  Heart,
+  LogOutIcon,
+  Package,
+  Search,
+  ShoppingBag,
+  UserSquare,
+} from "lucide-react";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { Avatar } from "./avatar";
-import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
-import { Separator } from "./separator";
 import Link from "next/link";
-import SidebarLink from "./sidebar-link";
+import SidebarLink, { SIDEBAR_ICON } from "./sidebar-link";
 import Sidebar from "./sidebar";
-import Cart from "./cart";
-import { Badge } from "./badge";
 import Logo from "./logo";
+import { NavLink } from "./nav-link";
+import { Button } from "./button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+} from "./dropdown-menu";
+import { MenuUserTrigger } from "./menu-user-trigger";
+import { Input } from "./input";
+import { useState } from "react";
 
+interface NavLinkProps {
+  href: string;
+  title: string;
+  icon: keyof typeof SIDEBAR_ICON;
+}
+
+const links: NavLinkProps[] = [
+  { href: "/", title: "Início", icon: "home" },
+  { href: "/deals", title: "Ofertas", icon: "deals" },
+  { href: "/catalog", title: "Catálogo", icon: "catalog" },
+];
 const Header = () => {
   const { status, data } = useSession();
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const handleLoginClick = async () => {
     await signIn();
   };
@@ -22,89 +46,99 @@ const Header = () => {
     await signOut();
   };
   return (
-    <Card className="flex flex-1 items-center justify-between rounded-none border-0 bg-foreground ">
-      <div className="container flex w-full items-center justify-between p-[1.875rem]">
-        <Sidebar header="Menu">
-          {status === "authenticated" && data?.user && (
-            <div className="flex flex-col">
-              <div className="flex items-center gap-2 py-4">
-                <Avatar>
-                  <AvatarFallback>
-                    {data?.user?.name?.[0].toUpperCase()}
-                  </AvatarFallback>
-                  {data.user.image && <AvatarImage src={data.user.image} />}
-                </Avatar>
-                <div className="flex flex-col">
-                  <p className="font-medium">{data.user.name}</p>
-                  <p className="text-sm opacity-75">Boas Compras!</p>
-                </div>
-              </div>
-              <Separator />
-            </div>
-          )}
-          <div className="mt-4 flex flex-col gap-3">
-            {status === "unauthenticated" && (
-              <SidebarLink onClick={handleLoginClick} icon="login">
-                Fazer Login
-              </SidebarLink>
-            )}
-            {status === "authenticated" && (
-              <SidebarLink onClick={handleLogoutClick} icon="logout">
-                Fazer Logout
-              </SidebarLink>
-            )}
-
-            <SidebarLink href="/" icon="home">
-              Início
-            </SidebarLink>
-            <SidebarLink href="/orders" icon="order">
-              Meus Pedidos
-            </SidebarLink>
-            <SidebarLink href="/deals" icon="deals">
-              Ofertas
-            </SidebarLink>
-            <SidebarLink href="/catalog" icon="catalog">
-              Catálogo
-            </SidebarLink>
-          </div>
-        </Sidebar>
-
+    <header className="flex w-full flex-col items-center bg-foreground py-4 text-background">
+      <div className="flex h-full w-full max-w-7xl items-center justify-between px-4 ">
         <Link href={"/"}>
-          <Logo variant="light" />
-          {/* <Image src={Logo} alt="Logo" width={180} /> */}
-
-          {/* <h1 className="text-lg font-semibold">
-         <span
-            className="
-          bg-gradient-to-r 
-          from-[#5033C3] 
-          to-[#8162FF] 
-          bg-clip-text 
-          font-extrabold
-          text-transparent"
-          >
-            Z
-          </span>
-          Shop
-        </h1> */}
+          <Logo />
         </Link>
 
-        <Sidebar
-          header={
-            <Badge
-              className="w-fit gap-1 border-2 border-primary px-3 py-[0.375rem] text-base uppercase"
-              variant={"outline"}
+        <nav className="hidden gap-4 md:flex">
+          {links.map((link) => (
+            <NavLink key={link.title} href={link.href}>
+              {link.title}
+            </NavLink>
+          ))}
+        </nav>
+
+        <div className="flex items-center justify-between gap-2 md:gap-4">
+          <Button
+            size={"icon"}
+            variant={"link"}
+            className="text-background"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            <Search />
+          </Button>
+          <NavLink href={"/cart"}>
+            <ShoppingBag />
+          </NavLink>
+
+          {status === "authenticated" && data?.user ? (
+            <DropdownMenu>
+              <MenuUserTrigger data={data} />
+              <DropdownMenuContent>
+                <DropdownMenuLabel>Perfil</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+
+                <DropdownMenuItem className="w-full">
+                  <NavLink href={"/orders"}>
+                    <Package size={16} />
+                    Meus Pedidos
+                  </NavLink>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <NavLink href={"/favorites"}>
+                    <Heart size={16} />
+                    Favoritos
+                  </NavLink>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <Button
+                    variant={"ghost"}
+                    size={"sm"}
+                    onClick={handleLogoutClick}
+                    className="m-0 gap-4 p-0 hover:text-destructive"
+                  >
+                    <LogOutIcon size={16} />
+                    Sair
+                  </Button>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Button
+              variant={"link"}
+              className="gap-2 text-background"
+              onClick={handleLoginClick}
             >
-              <ShoppingCartIcon /> Carrinho
-            </Badge>
-          }
-          icon="cart"
-          side="right"
-        >
-          <Cart />
-        </Sidebar>
+              <UserSquare />
+              Entre
+            </Button>
+          )}
+          <Sidebar icon="menu" side="right" header={"Menu"}>
+            {links.map((link) => (
+              <SidebarLink key={link.title} href={link.href} icon={link.icon}>
+                {link.title}
+              </SidebarLink>
+            ))}
+          </Sidebar>
+        </div>
       </div>
-    </Card>
+      {isOpen && (
+        <div className="flex h-full w-full max-w-7xl items-center justify-center gap-2 px-4 ">
+          <Input
+            type="text"
+            placeholder="Buscar produto..."
+            className="h-9 max-w-xs text-foreground"
+          />
+          <Button size={"sm"} variant={"default"} className="h-9">
+            Buscar
+          </Button>
+        </div>
+      )}
+    </header>
   );
 };
 

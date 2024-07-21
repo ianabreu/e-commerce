@@ -12,7 +12,7 @@ import { SheetClose } from "./sheet";
 import Link from "next/link";
 
 interface SidebarLinkProps {
-  children: ReactNode;
+  children?: ReactNode;
   icon?: keyof typeof SIDEBAR_ICON;
   href?: string;
   onClick?: () => void;
