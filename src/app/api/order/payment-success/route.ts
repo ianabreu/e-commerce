@@ -1,44 +1,42 @@
-import { prismaClient } from "@/lib/prisma";
-import { NextResponse } from "next/server";
-import Stripe from "stripe";
+import { stripe } from "@/lib/stripe";
+import { updateOrderByIdService } from "@/services/order/updateOrderService";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: "2023-10-16",
-});
 export const POST = async (request: Request) => {
-  const signature = request.headers.get("stripe-signature");
-  if (!signature) {
-    return NextResponse.error();
-  }
-
-  const text = await request.text();
-
-  const event = stripe.webhooks.constructEvent(
-    text,
-    signature,
-    process.env.STRIPE_WEBHOOK_SECRET_KEY,
-  );
-  if (event.type === "checkout.session.completed") {
-    const sessionWithLineItems = await stripe.checkout.sessions.retrieve(
-      event.data.object.id,
-      {
-        expand: ["line_items"],
-      },
-      { apiVersion: "2023-10-16" },
+  try {
+    const signature = request.headers.get("stripe-signature");
+    if (!signature) {
+      return Response.json(
+        { message: "Sem assinatura stripe" },
+        { status: 400 },
+      );
+    }
+    const payload = await request.text();
+    const event = stripe.webhooks.constructEvent(
+      payload,
+      signature,
+      process.env.STRIPE_WEBHOOK_SECRET_KEY,
     );
-    const orderId = sessionWithLineItems.metadata?.orderId as string;
 
-    await prismaClient.order.update({
-      where: {
-        id: orderId,
-      },
-      data: {
-        status: "PAYMENT_CONFIRMED",
-      },
-    });
-  } else {
-    console.log("EventType: ", event.type);
+    switch (event.type) {
+      case "checkout.session.completed":
+        const sessionWithLineItems = await stripe.checkout.sessions.retrieve(
+          event.data.object.id,
+          {
+            expand: ["line_items"],
+          },
+        );
+        const orderId = sessionWithLineItems.metadata?.orderId as string;
+        const order = await updateOrderByIdService(
+          orderId,
+          "PAYMENT_CONFIRMED",
+        );
+        break;
+      default:
+        console.log("Evento Desconhecido: ", event.type);
+    }
+
+    return Response.json({}, { status: 200 });
+  } catch (error) {
+    return Response.json(error, { status: 400 });
   }
-
-  return NextResponse.json({ received: true });
 };
