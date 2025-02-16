@@ -6,6 +6,7 @@ import { AuthProvider } from "@/providers/auth";
 import Footer from "@/components/ui/footer";
 import { CartProvider } from "@/providers/cart";
 import storeInfo from "../../public/data/store.json";
+import { Toaster } from "@/components/ui/toaster";
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700", "800"],
@@ -26,11 +27,12 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body className={poppins.className}>
-        <div className="flex h-full flex-col overflow-x-hidden">
+        <div className="flex h-screen max-h-screen flex-col gap-2  overflow-x-hidden">
           <AuthProvider>
             <CartProvider>
               <Header />
-              <div className="flex-1">{children}</div>
+              <div className="flex flex-1 flex-grow">{children}</div>
+              <Toaster />
               <Footer />
             </CartProvider>
           </AuthProvider>

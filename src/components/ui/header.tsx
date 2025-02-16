@@ -3,7 +3,6 @@ import {
   Heart,
   LogOutIcon,
   Package,
-  Search,
   ShoppingBag,
   UserSquare,
 } from "lucide-react";
@@ -22,8 +21,8 @@ import {
   DropdownMenuSeparator,
 } from "./dropdown-menu";
 import { MenuUserTrigger } from "./menu-user-trigger";
-import { Input } from "./input";
-import { useState } from "react";
+import { useContext } from "react";
+import { CartContext } from "@/providers/cart";
 
 interface NavLinkProps {
   href: string;
@@ -38,7 +37,8 @@ const links: NavLinkProps[] = [
 ];
 const Header = () => {
   const { status, data } = useSession();
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { getCartQuantityItens } = useContext(CartContext);
+  // const [isOpen, setIsOpen] = useState<boolean>(false);
   const handleLoginClick = async () => {
     await signIn();
   };
@@ -46,7 +46,7 @@ const Header = () => {
     await signOut();
   };
   return (
-    <header className="flex w-full flex-col items-center bg-foreground py-4 text-background">
+    <header className="sticky top-0 z-50 flex w-full flex-col items-center bg-foreground py-4 text-background">
       <div className="flex h-full w-full max-w-7xl items-center justify-between px-4 ">
         <Link href={"/"}>
           <Logo />
@@ -60,17 +60,26 @@ const Header = () => {
           ))}
         </nav>
 
-        <div className="flex items-center justify-between gap-2 md:gap-4">
-          <Button
+        <div className="flex items-center justify-between gap-2 md:gap-6">
+          {/* <Button
             size={"icon"}
             variant={"link"}
             className="text-background"
             onClick={() => setIsOpen(!isOpen)}
           >
             <Search />
-          </Button>
+          </Button> */}
           <NavLink href={"/cart"}>
-            <ShoppingBag />
+            <div className="relative">
+              {getCartQuantityItens() > 0 && (
+                <div className="absolute -bottom-2 -right-4 flex aspect-square w-full items-center justify-center rounded-full bg-primary ">
+                  <span className="text-[10px] text-white">
+                    {getCartQuantityItens()}
+                  </span>
+                </div>
+              )}
+              <ShoppingBag />
+            </div>
           </NavLink>
 
           {status === "authenticated" && data?.user ? (
@@ -126,7 +135,7 @@ const Header = () => {
           </Sidebar>
         </div>
       </div>
-      {isOpen && (
+      {/* {isOpen && (
         <div className="flex h-full w-full max-w-7xl items-center justify-center gap-2 px-4 ">
           <Input
             type="text"
@@ -137,7 +146,7 @@ const Header = () => {
             Buscar
           </Button>
         </div>
-      )}
+      )} */}
     </header>
   );
 };

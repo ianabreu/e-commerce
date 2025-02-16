@@ -13,7 +13,7 @@ const ProductQuantity = ({
   size = "normal",
 }: ProductQuantityProps) => {
   return (
-    <div className="mt-4 flex items-center gap-2">
+    <div className="flex items-center gap-2">
       <Button
         size="icon"
         variant={"outline"}

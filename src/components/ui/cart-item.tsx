@@ -16,9 +16,9 @@ const CartItem = ({ product }: CartItemProps) => {
     removeProductFromCart,
   } = useContext(CartContext);
   return (
-    <div className="flex items-center justify-between">
-      <div className="flex items-center gap-4">
-        <div className="flex h-[77px] w-[77px] items-center justify-center rounded-lg bg-accent">
+    <div className="flex w-full items-center justify-between px-2">
+      <div className="flex flex-1 items-center gap-2">
+        <div className="flex h-[60px] w-[60px] items-center justify-center rounded-lg bg-accent">
           <Image
             src={product.image_urls[0]}
             alt={product.name}
@@ -29,7 +29,7 @@ const CartItem = ({ product }: CartItemProps) => {
           />
         </div>
         <div className="flex flex-col">
-          <p className="text-xs">{product.name}</p>
+          <p className="line-clamp-2 text-xs">{product.name}</p>
           <div className="flex items-center gap-2">
             <p className="text-sm font-bold">
               {formatPrice(product.totalPrice)}

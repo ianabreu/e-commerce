@@ -1,13 +1,13 @@
 "use client";
-
 import { useState, useContext } from "react";
 import { Button } from "@/components/ui/button";
 import DiscountBadge from "@/components/ui/discount-badge";
 import { ProductWithTotalPrice } from "@/helpers/product";
 import { CartContext } from "@/providers/cart";
-import { ArrowLeftIcon, ArrowRightIcon, TruckIcon } from "lucide-react";
+import { TruckIcon } from "lucide-react";
 import ProductQuantity from "@/components/ui/product-quantity";
 import { formatPrice } from "@/helpers/formatPrice";
+import { toast } from "@/hooks/use-toast";
 
 interface ProductInfoProps {
   product: ProductWithTotalPrice;
@@ -24,6 +24,12 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
   };
   const handleAddProductToCart = () => {
     addProductToCart({ ...product, quantity });
+    toast({
+      title: "Sucesso ao adicionar!",
+      description: "Produto adicionado ao carrinho.",
+      variant: "success",
+      duration: 2000,
+    });
   };
 
   return (

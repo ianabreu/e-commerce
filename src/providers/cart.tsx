@@ -1,6 +1,13 @@
 "use client";
 import { ProductWithTotalPrice } from "@/helpers/product";
-import { ReactNode, createContext, useEffect, useMemo, useState } from "react";
+import {
+  ReactNode,
+  createContext,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
 export interface CartProduct extends ProductWithTotalPrice {
   quantity: number;
@@ -14,6 +21,7 @@ interface ICartContext {
   cartTotalPrice: number;
   cartSubtotalPrice: number;
   cartTotalDiscount: number;
+  getCartQuantityItens: () => number;
 }
 export const CartContext = createContext<ICartContext>({
   products: [],
@@ -24,16 +32,20 @@ export const CartContext = createContext<ICartContext>({
   decreaseProductQuantity: () => {},
   increaseProductQuantity: () => {},
   removeProductFromCart: () => {},
+  getCartQuantityItens: () => 0,
 });
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  const [products, setProducts] = useState<CartProduct[]>([]);
-
   const getLocalCartProducts = (): CartProduct[] => {
     const products = localStorage.getItem("@ecommerce/cart-products");
     if (products) return JSON.parse(products) as CartProduct[];
     return [] as CartProduct[];
   };
+
+  const [products, setProducts] = useState<CartProduct[]>(
+    getLocalCartProducts(),
+  );
+
   const setLocalCartProducts = (products: CartProduct[]) => {
     localStorage.setItem("@ecommerce/cart-products", JSON.stringify(products));
   };
@@ -41,9 +53,6 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     setLocalCartProducts(products);
   }, [products]);
-  useEffect(() => {
-    setProducts(getLocalCartProducts());
-  }, []);
 
   const cartSubtotalPrice = useMemo(() => {
     return products.reduce((acc, products) => {
@@ -104,7 +113,14 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       }),
     );
   };
-
+  const getCartQuantityItens = useCallback(() => {
+    let initialValue = 0;
+    const total = products.reduce(
+      (accumulator, currentValue) => accumulator + currentValue.quantity,
+      initialValue,
+    );
+    return total;
+  }, [products]);
   return (
     <CartContext.Provider
       value={{
@@ -113,6 +129,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         decreaseProductQuantity,
         increaseProductQuantity,
         removeProductFromCart,
+        getCartQuantityItens,
         cartTotalPrice,
         cartSubtotalPrice,
         cartTotalDiscount,
