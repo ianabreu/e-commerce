@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body className={poppins.className}>
-        <div className="flex h-screen max-h-screen flex-col gap-2  overflow-x-hidden">
+        <div className="flex h-screen max-h-screen flex-col overflow-x-hidden">
           <AuthProvider>
             <CartProvider>
               <Header />

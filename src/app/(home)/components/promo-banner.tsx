@@ -10,7 +10,7 @@ const PromoBanner = ({ src, alt }: ImageProps) => {
       className="h-auto max-h-[70vh] w-full"
       sizes="100vw"
       style={{
-        objectFit: "cover",
+        objectFit: "contain",
       }}
     />
   );

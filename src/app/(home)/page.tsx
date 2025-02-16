@@ -43,7 +43,7 @@ export default async function Home() {
 
   return (
     <div className="container flex flex-col gap-8 px-0">
-      <div className="">
+      <div className="flex">
         <Slider slides={slides} />
       </div>
       <div className="px-5">

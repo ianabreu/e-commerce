@@ -36,15 +36,17 @@ export const CartContext = createContext<ICartContext>({
 });
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  const getLocalCartProducts = (): CartProduct[] => {
+  const getLocalCartProducts = useCallback((): CartProduct[] => {
     const products = localStorage.getItem("@ecommerce/cart-products");
     if (products) return JSON.parse(products) as CartProduct[];
     return [] as CartProduct[];
-  };
+  }, []);
 
-  const [products, setProducts] = useState<CartProduct[]>(
-    getLocalCartProducts(),
-  );
+  const [products, setProducts] = useState<CartProduct[]>([]);
+
+  useEffect(() => {
+    getLocalCartProducts();
+  }, [getLocalCartProducts]);
 
   const setLocalCartProducts = (products: CartProduct[]) => {
     localStorage.setItem("@ecommerce/cart-products", JSON.stringify(products));

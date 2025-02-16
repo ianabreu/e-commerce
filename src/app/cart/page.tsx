@@ -35,7 +35,7 @@ const CartPage = () => {
     stripe?.redirectToCheckout({ sessionId: checkoutId });
   };
   return (
-    <div className="flex h-full max-h-full  flex-col gap-4 overflow-hidden sm:container">
+    <div className="flex h-full max-h-full w-full flex-col gap-4 overflow-hidden sm:container">
       <Badge
         className="w-fit gap-1 border-2 border-primary px-3 py-[0.375rem] text-base uppercase"
         variant={"outline"}
@@ -43,7 +43,7 @@ const CartPage = () => {
         <ShoppingBag size={16} /> Carrinho
       </Badge>
       {/* <ScrollArea className="h-full"> */}
-      <div className="flex h-full flex-col gap-4">
+      <div className="flex h-full w-full flex-col gap-4">
         {products.length > 0 ? (
           products.map((product) => (
             <CartItem product={product} key={product.slug} />
