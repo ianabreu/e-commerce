@@ -60,7 +60,7 @@ const Header = () => {
           ))}
         </nav>
 
-        <div className="flex items-center justify-between gap-2 md:gap-6">
+        <div className="flex items-center justify-between gap-2  md:gap-6">
           {/* <Button
             size={"icon"}
             variant={"link"}
